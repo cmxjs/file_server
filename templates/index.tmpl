@@ -1,0 +1,25 @@
+<html>
+    <body>
+    上传文件
+    <form action="/upload" method="post" enctype="multipart/form-data", target="myIframe">
+        <input type="file" name="file"> <input type="submit" value="Submit">
+    </form>
+      上传结果:<br>
+    <iframe id="myIframe" name="myIframe" style="width:400px;height:50px" srolling=no></iframe>
+    <br>
+    <br>
+
+    <details id="details" open=true>
+        &nbsp;&nbsp;<button onclick="location.reload()">刷新列表</button><br><br>
+        <summary>下载文件</summary>
+            {{ range $i, $v := .download_url }}
+            <form id="{{ $i }}_form" name="{{ index $v 0 }}" action="/download_handler" method="post">
+            <input type="hidden" name="download_file" value="{{ index $v 1 }}" />
+            &nbsp;&nbsp;<a onclick="document.getElementById('{{ $i }}_form').submit();" href="javascript:void(0);">{{ index $v 0}}</a>
+            </form>
+            {{ else }}
+            file_cache empty
+            {{ end }}
+    </details>
+    </body>
+</html>
